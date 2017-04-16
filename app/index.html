@@ -10,8 +10,11 @@
 <body>
   <h1>Open-Journal</h1>
   <h2>open source peer reviews</h2>
-  <h3>You have <span class="black"><span id="unpublished"></span> unpublished papers</span>
-  <h3>You have <span class="black"><span id="published"></span> published papers</span>
+  <h3>
+    You have <span class="black"><span id="unpublished"></span> unpublished papers</span>
+  </h3>
+  <h3>
+    You have <span class="black"><span id="published"></span> published papers</span>
   </h3>
   <br>
 
@@ -19,11 +22,14 @@
   <br><label for="paper">Paper (as text)</label><input type="text" id="paper"></input>
   <br><br><button id="send" onclick="App.uploadPaper()">Upload</button>
   <br><br>
+
+  <h1>Review a paper</h1>
+  <br><label for="id">Id</label><input type="text" id="id"></input>
+  <br><br><button id="send" onclick="App.reviewPaper()">Review</button>
+  <br>
+
   <span id="status"></span>
   <br>
-  
-  <h1>Review a paper</h1>
-
 </body>
 
 </html>

@@ -5,29 +5,28 @@ contract OpenJournal {
 	struct Paper {
 		address author;
 		string content;
-		// address[] reviewers;
+		uint reviewerCount;
 	}
 
 	Paper[] papers;
 
-	//event UploadPaper(address indexed _from, address indexed _to, uint256 _value);
-
 	function uploadPaper(string content) returns(bool success) {
-		// var reviewers = new address[]; 
-		var paper = Paper(msg.sender, content);
+		var paper = Paper(msg.sender, content, 0);
 		papers.push(paper);
 
-		// if (balances[msg.sender] < amount) return false;
-		// balances[msg.sender] -= amount;
-		// balances[receiver] += amount;
-		// Transfer(msg.sender, receiver, amount);
+		return true;
+	}
+
+	function reviewPaper(uint id) returns(bool success) {
+		papers[id].reviewerCount ++;
+
 		return true;
 	}
 
 	function getUnpublished() returns(uint) {
 		var count = 0;
 		for (var i = 0; i < papers.length; i++) {
-			if (papers[i].author == msg.sender) {
+			if (papers[i].author == msg.sender && !isPublished(papers[i])) {
 				count ++;
 			}
         }
@@ -37,10 +36,14 @@ contract OpenJournal {
 	function getPublished() returns(uint) {
 		var count = 0;
 		for (var i = 0; i < papers.length; i++) {
-			if (papers[i].author == msg.sender) {
+			if (papers[i].author == msg.sender && isPublished(papers[i])) {
 				count ++;
 			}
         }
 		return count;
+	}
+
+	function isPublished(Paper paper) private returns(bool) {
+		return paper.reviewerCount > 0;
 	}
 }

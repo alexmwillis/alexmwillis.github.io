@@ -86,6 +86,25 @@ window.App = {
       console.log(e);
       self.setStatus("Error sending coin; see log.");
     });
+  },
+
+  reviewPaper: function() {
+    var self = this;
+
+    var id = document.getElementById("id").value;
+    
+    this.setStatus("Initiating transaction... (please wait)");
+
+    OpenJournal.deployed().then(function(instance) {
+      instance;
+      return instance.reviewPaper(id, {from: account});
+    }).then(function() {
+      self.setStatus("Transaction complete!");
+      self.refreshBalance();
+    }).catch(function(e) {
+      console.log(e);
+      self.setStatus("Error sending coin; see log.");
+    });
   }
 };
 
