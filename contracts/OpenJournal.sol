@@ -6,44 +6,56 @@ contract OpenJournal {
 		address author;
 		string content;
 		uint reviewerCount;
+		address[] reviewers;
 	}
 
-	Paper[] papers;
-
-	function uploadPaper(string content) returns(bool success) {
-		var paper = Paper(msg.sender, content, 0);
+	Paper[] papers;	
+	
+    function uploadPaper(string content) returns(bool) {
+		var paper = Paper(msg.sender, content, 0, new address[](0));
 		papers.push(paper);
 
 		return true;
 	}
 
-	function reviewPaper(uint id) returns(bool success) {
+	function reviewPaper(uint id) returns(bool) {
 		papers[id].reviewerCount ++;
 
 		return true;
 	}
 
-	function getUnpublished() returns(uint) {
-		var count = 0;
-		for (var i = 0; i < papers.length; i++) {
-			if (papers[i].author == msg.sender && !isPublished(papers[i])) {
-				count ++;
-			}
-        }
-		return count;
+	function getPaperCount() returns(uint) {
+		return papers.length;
 	}
 
-	function getPublished() returns(uint) {
-		var count = 0;
-		for (var i = 0; i < papers.length; i++) {
-			if (papers[i].author == msg.sender && isPublished(papers[i])) {
-				count ++;
-			}
-        }
-		return count;
+	function getPaper(uint id) returns(address author, string content, uint reviewerCount) {
+		author = papers[id].author;
+		content = papers[id].content;
+		reviewerCount = papers[id].reviewerCount;
 	}
 
-	function isPublished(Paper paper) private returns(bool) {
-		return paper.reviewerCount > 0;
-	}
+	// uint[] ids;
+	// function getUnpublished() returns(uint[]) {
+	// 	ids = new uint[](0);
+	// 	for (var i = 0; i < papers.length; i++) {
+	// 		if (papers[i].author == msg.sender && !isPublished(papers[i])) {
+	// 			ids.push(i);
+	// 		}
+    //     }
+	// 	return ids;
+	// }
+
+	// function getPublished() returns(uint[]) {
+	// 	ids = new uint[](0);
+	// 	for (var i = 0; i < papers.length; i++) {
+	// 		if (papers[i].author == msg.sender && isPublished(papers[i])) {
+	// 			ids.push(i);
+	// 		}
+    //     }
+	// 	return ids;
+	// }
+
+	// function isPublished(Paper paper) private returns(bool) {
+	// 	return paper.reviewerCount > 0;
+	// }
 }
