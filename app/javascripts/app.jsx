@@ -8,9 +8,9 @@ import JournalClient from './data/JournalClient';
 const Title = ({paperCount}) => {
   return (
     <div>
-      <h1>Open-Journal</h1>
+      <h1>Open-Journal</h1><br/>
       <h2>//open source peer reviews</h2>
-      <h3>There are <span className="black">{paperCount}</span> papers</h3>
+      <h3>There are&nbsp;<span className="black">{paperCount}</span>&nbsp;papers</h3>
     </div>
   );
 }
@@ -49,15 +49,17 @@ class OpenJournalApp extends React.Component {
   }
 
   componentDidMount() {
-    JournalClient.getPapers(papers => {
-      this.setState({papers})
-    });
+    JournalClient
+      .getPapers()
+      .then(papers => {
+        this.setState({papers})
+      });
   }
 
   render() {
     return (
       <div>
-        <Title paperCount={this.state.papers.size}/> {this.state.papers[0]}
+        <Title paperCount={this.state.papers.length}/>
         <PaperList papers={this.state.papers}/>
       </div>
     );

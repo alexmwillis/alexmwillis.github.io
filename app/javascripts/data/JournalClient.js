@@ -8,7 +8,7 @@ OpenJournal.setProvider(web3.currentProvider);
 
 var accounts;
 var account;
-
+var counter = 0;
 if (typeof web3 !== 'undefined') {
     window.web3 = new Web3(web3.currentProvider);
 } else {
@@ -33,64 +33,65 @@ web3
         account = accounts[0];
     });
 
-const JournalClient = {
-    callContract(withInstance, withReturnValue, failure) {
-        OpenJournal
-            .deployed()
-            .then(function (instance) {
-                return withInstance(instance);
+const JournalClient = {    
+    getInstance(withInstance) {
+        return new Promise((resolve, reject) => {
+            OpenJournal
+                .deployed()
+                .then(instance => resolve(instance))
+                .catch(e => {
+                    console.log(e);
+                    if (reject) {
+                        reject(e);
+                    };
+                });
+        });
+    },
+    getPaper(id) {
+        return JournalClient
+            .getInstance()
+            .then(instance => {
+                return instance
+                    .getPaper
+                    .call(id);
             })
-            .then(function (value) {
-                withReturnValue(value)
-            })
-            .catch(function (e) {
-                console.log(e);
-                failure(e);
+            .then(paper => {
+                return new Paper({
+                    id: counter++, // todo fix this
+                    title: paper[1].valueOf(),
+                    author: paper[0].valueOf(),
+                    reviewCount: paper[2].valueOf()
+                });
             });
     },
-    getPapers(success, failure) {
-        this.getPaperCount(count => {
-            for (var i = 0; i < count; i++) {
-                this.getPaper(i, success);
-            }
-        }, e => failure('failed to get papers'));
+    getPapers() {
+        return JournalClient
+            .getPaperCount()
+            .then(count => {
+                const ids = Array.from(Array(count).keys());
+                const getPapers = ids.map(JournalClient.getPaper);
+                return Promise.all(getPapers);
+            });
+    },    
+    getPaperCount() {
+        return JournalClient
+            .getInstance()
+            .then(instance => {
+                return instance
+                    .getPaperCount
+                    .call();
+            })
+            .then(count => {
+                return parseInt(count.valueOf());
+            });
     },
-    getPaper(id, success, failure) {
-        this.callContract(instance => {
-            return instance
-                .getPaper
-                .call(id)
-        }, paper => {
-            success(new Paper({
-                title: paper[1].valueOf(),
-                author: paper[0].valueOf(),
-                reviewCount: paper[2].valueOf()
-            }));
-        }, e => failure('failed to get paper'));
-    },
-    getPaperCount(success, failure) {
-        this.callContract(instance => {
-            return instance
-                .getPaperCount
-                .call();
-        }, count => {
-            success(count);
-        }, e => failure('failed to get paper count'));
-    },
-    reviewPaper(id, success, failure) {
-        this.callContract(instance => {
-            return instance.reviewPaper(id, {from: account});
-        }, () => {
-            success("paper reviewed");
-        }, e => failure('failed to review paper'));
-    },
-    uploadPaper(paper, success, failure) {
-        this.callContract(instance => {
-            return instance.uploadPaper(paper, {from: account});
-        }, () => {
-            success("paper uploaded");
-        }, e => failure('failed to uploaded paper'));
-    }
+    // reviewPaper(id, success, failure) {     this.callContract(instance => {
+    //   return instance.reviewPaper(id, {from: account});     }, () => {
+    // success("paper reviewed");     }, e => failure('failed to review paper')); },
+    // uploadPaper(paper, success, failure) {     this.callContract(instance => {
+    //      return instance.uploadPaper(paper, {from: account});     }, () => {
+    //    success("paper uploaded");     }, e => failure('failed to uploaded
+    // paper')); }
 };
 
 export default JournalClient;
