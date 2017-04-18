@@ -12,6 +12,10 @@ module.exports = {
       { from: './app/index.html', to: "index.html" }
     ])
   ],
+  devtool: 'source-map',
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
   module: {
     loaders: [
       { test: /\.css$/, loader: 'style-loader!css-loader' },

@@ -4,6 +4,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {default as Web3} from 'web3';
 import JournalClient from './data/JournalClient';
+import PaperList from './views/PaperList';
+import UploadPaper from './views/UploadPaper';
 
 const Title = ({paperCount}) => {
   return (
@@ -12,31 +14,6 @@ const Title = ({paperCount}) => {
       <h2>//open source peer reviews</h2>
       <h3>There are&nbsp;<span className="black">{paperCount}</span>&nbsp;papers</h3>
     </div>
-  );
-}
-
-const Paper = ({paper}) => {
-  return (
-    <div className="paper-item">
-      <table>
-        <tbody>
-          <tr>
-            <td>{paper.title}</td>
-            <td>{paper.author}</td>
-            <td>{paper.reviewCount}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-const PaperList = ({papers}) => {
-  const papersNode = papers.map((paper) => {
-    return (<Paper paper={paper} key={paper.id}/>)
-  });
-  return (
-    <div className="paper-list">{papersNode}</div>
   );
 }
 
@@ -60,7 +37,8 @@ class OpenJournalApp extends React.Component {
     return (
       <div>
         <Title paperCount={this.state.papers.length}/>
-        <PaperList papers={this.state.papers}/>
+        <PaperList papers={this.state.papers}/><br/>
+        <UploadPaper />
       </div>
     );
   }
