@@ -1,21 +1,28 @@
 import React from 'react';
 import ReviewPaper from './ReviewPaper';
+import {Table} from 'react-bootstrap';
 
 const Paper = ({paper}) => {
   return (
-    <div className="paper-item">
-      <table>
-        <tbody>
-          <tr>
-            <td>{paper.id}</td>
-            <td>{paper.title}</td>
-            <td>{paper.author}</td>
-            <td>{paper.reviewCount}</td>
-            <td><ReviewPaper id={paper.id} /></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <tr>
+      <td>{paper.id}</td>
+      <td>{paper.title}</td>
+      <td>{paper.author}</td>
+      <td>{paper.reviewCount}</td>
+      <td><ReviewPaper id={paper.id}/></td>
+    </tr>
+  );
+}
+
+const PaperListHeader = () => {
+  return (
+    <tr>
+      <th>#</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Review Count</th>
+      <th>Review</th>
+    </tr>
   );
 }
 
@@ -24,7 +31,10 @@ const PaperList = ({papers}) => {
     return (<Paper paper={paper} key={paper.id}/>)
   });
   return (
-    <div className="paper-list">{papersNode}</div>
+    <Table striped bordered condensed hover>
+      <thead><PaperListHeader/></thead>
+      <tbody>{papersNode}</tbody>
+    </Table>
   );
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import JournalClient from '../data/JournalClient';
+import {Button, Glyphicon} from 'react-bootstrap';
 
 class ReviewPaper extends React.Component {
 
@@ -14,12 +15,12 @@ class ReviewPaper extends React.Component {
 
     render() {
         return <div>
-            <button
+            <Button
                 onClick={this
                 .handleClick
                 .bind(this, this.state.id)}>
-                Review
-            </button>
+                <Glyphicon glyph="book"/>
+            </Button>
             <span>{this.state.status}</span>
         </div>
     }

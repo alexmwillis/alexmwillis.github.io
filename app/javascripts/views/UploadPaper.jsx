@@ -1,5 +1,6 @@
 import React from 'react';
 import JournalClient from '../data/JournalClient';
+import {Form, FormGroup, FormControl, ControlLabel, Button} from 'react-bootstrap';
 
 class UploadPaper extends React.Component {
     constructor(props) {
@@ -12,23 +13,25 @@ class UploadPaper extends React.Component {
     }
 
     render() {
-        return <div>
-            <input
-                type="text"
-                value={this.state.title}
-                onChange={this
-                .handleChange
-                .bind(this)}
-                placeholder="insert title..."/>
-            <button
+        return <Form inline>
+            <FormGroup controlId="formUploadPaper">
+                <ControlLabel>Upload Paper</ControlLabel>
+                {' '}
+                <FormControl
+                    type="text"
+                    value={this.state.title}
+                    placeholder="insert title..."
+                    onChange={this.handleChange}/>
+            </FormGroup>
+            {' '}
+            <Button
                 onClick={this
                 .handleClick
                 .bind(this, this.state.title)}>
                 Upload
-            </button>
-            <br/>
+            </Button>
             <span>{this.state.status}</span>
-        </div>
+        </Form>
     }
 
     handleClick(title, e) {
