@@ -19,7 +19,7 @@ class ReviewPaper extends React.Component {
                 onClick={this
                 .handleClick
                 .bind(this, this.state.id)}>
-                <Glyphicon glyph="book"/>
+                <Glyphicon glyph="thumbs-up"/>
             </Button>
             <span>{this.state.status}</span>
         </div>

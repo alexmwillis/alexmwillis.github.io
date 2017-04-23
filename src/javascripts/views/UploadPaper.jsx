@@ -29,6 +29,7 @@ class UploadPaper extends React.Component {
                 .handleClick
                 .bind(this, this.state.title)}>
                 Upload
+                <Glyphicon glyph="book"/>
             </Button>
             <span>{this.state.status}</span>
         </Form>
