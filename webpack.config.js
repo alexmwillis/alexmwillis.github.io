@@ -1,18 +1,19 @@
-const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
-  entry: './app/javascripts/app.jsx',
+  entry: './src/javascripts/main.jsx',
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js'
   },
   plugins: [
     new CopyWebpackPlugin([
-      { from: './app/index.html', to: "index.html" }
+      { from: './src/index.html', to: 'index.html' }
     ])
   ],
   devtool: 'source-map',
+  devServer: { inline: true },
   resolve: {
     extensions: ['.js', '.jsx']
   },
@@ -28,30 +29,30 @@ module.exports = {
           presets: ['es2015', 'react']
         }
       },
-      { 
-        test: /\.png$/, 
-        loader: "url-loader?limit=100000" 
-      },
-      { 
-        test: /\.jpg$/, 
-        loader: "file-loader" 
+      {
+        test: /\.png$/,
+        loader: 'url-loader?limit=100000'
       },
       {
-        test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, 
-        loader: 'url-loader?limit=10000&mimetype=application/font-woff'
-      },
-      {
-        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, 
-        loader: 'url-loader?limit=10000&mimetype=application/octet-stream'
-      },
-      {
-        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, 
+        test: /\.jpg$/,
         loader: 'file-loader'
       },
       {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, 
+        test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url-loader?limit=10000&mimetype=application/font-woff'
+      },
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url-loader?limit=10000&mimetype=application/octet-stream'
+      },
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file-loader'
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
       }
     ]
-  },
-};
+  }
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import JournalClient from '../data/JournalClient';
+import JournalClient from '../types/JournalClient';
 import {Button, Glyphicon} from 'react-bootstrap';
 
 class ReviewPaper extends React.Component {
