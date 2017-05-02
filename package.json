@@ -1,13 +1,13 @@
 {
-  "name": "truffle-init-webpack",
+  "name": "open-journal",
   "version": "0.0.1",
-  "description": "Frontend example using truffle v3",
+  "private": true,
+  "description": "demo project using etherium",
   "scripts": {
-    "lint": "eslint ./",
     "build": "webpack",
     "dev": "webpack-dev-server --content-base build/"
   },
-  "author": "Douglas von Kohorn",
+  "author": "Alex Willis",
   "license": "MIT",
   "dependencies": {
     "bootstrap": "^3.3.7",

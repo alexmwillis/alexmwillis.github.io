@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { UPLOAD_PAPER, INVALIDATE_PAPERS, REQUEST_PAPERS, RECEIVE_PAPERS } from '../actions/actions'
+import { INVALIDATE_PAPERS, REQUEST_PAPERS, RECEIVE_PAPERS } from '../actions/actions'
 
 function papers (state = {
   isFetching: false,
@@ -13,8 +13,7 @@ function papers (state = {
       })
     case REQUEST_PAPERS:
       return Object.assign({}, state, {
-        isFetching: true,
-        didInvalidate: false
+        isFetching: true
       })
     case RECEIVE_PAPERS:
       return Object.assign({}, state, {

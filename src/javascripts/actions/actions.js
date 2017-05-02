@@ -1,27 +1,15 @@
 import JournalClient from '../types/JournalClient'
 
-export const UPLOAD_PAPER = 'UPLOAD_PAPER'
 export const INVALIDATE_PAPERS = 'INVALIDATE_PAPERS'
 export const REQUEST_PAPERS = 'REQUEST_PAPERS'
 export const RECEIVE_PAPERS = 'RECEIVE_PAPERS'
 
-export function uploadPaper (title) {
-  return {
-    type: UPLOAD_PAPER,
-    title
-  }
-}
-
 export function invalidatePapers () {
-  return {
-    type: INVALIDATE_PAPERS
-  }
+  return { type: INVALIDATE_PAPERS }
 }
 
 function requestPapers () {
-  return {
-    type: REQUEST_PAPERS
-  }
+  return { type: REQUEST_PAPERS }
 }
 
 function receivePapers (papers) {
@@ -36,9 +24,28 @@ export function fetchPapers () {
   return function (dispatch) {
     dispatch(requestPapers())
 
-    return JournalClient.getPapers()
-      .then(papers =>
-        dispatch(receivePapers(papers))
-      )
+    return JournalClient
+      .getPapers()
+      .then(papers => dispatch(receivePapers(papers)))
+  }
+}
+
+export function uploadPaper (title) {
+  return function (dispatch) {
+    return JournalClient
+      .uploadPaper(title)
+      .then(() => {
+        dispatch(fetchPapers())
+      })
+  }
+}
+
+export function reviewPaper (id) {
+  return function (dispatch) {
+    return JournalClient
+      .reviewPaper(id)
+      .then(() => {
+        dispatch(fetchPapers())
+      })
   }
 }

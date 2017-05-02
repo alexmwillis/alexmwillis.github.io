@@ -1,55 +1,59 @@
 import React from 'react'
-import { Form, FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap'
-import JournalClient from '../types/JournalClient'
+import { connect } from 'react-redux'
+import {
+  Form,
+  FormGroup,
+  FormControl,
+  ControlLabel,
+  Button,
+  Glyphicon
+} from 'react-bootstrap'
+import { uploadPaper } from '../actions/actions'
 
 class UploadPaper extends React.Component {
   constructor (props) {
     super(props)
 
-    this.state = {
-      title: '',
-      status: ''
-    }
-  }
+    this.uploadPaper = title => this.props.dispatch(uploadPaper(title))
 
-  render () {
-    return <Form inline>
-            <FormGroup controlId='formUploadPaper'>
-                <ControlLabel>Upload Paper</ControlLabel>
-                {' '}
-                <FormControl
-                    type='text'
-                    value={this.state.title}
-                    placeholder='insert title...'
-                    onChange={this.handleChange}/>
-            </FormGroup>
-            {' '}
-            <Button
-                onClick={this
-                .handleClick
-                .bind(this, this.state.title)}>
-                Upload
-                <Glyphicon glyph='book'/>
-            </Button>
-            <span>{this.state.status}</span>
-        </Form>
-  }
-
-  handleClick (title, e) {
-    this.setState({ status: 'Initiating transaction... (please wait)' })
-    JournalClient
-            .uploadPaper(title)
-            .then(() => {
-              this.setState({ status: 'Transaction complete' })
-            })
-            .catch(e => {
-              this.setState({ status: 'Transaction failed' })
-            })
+    this.state = { title: '' }
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleChange (e) {
     this.setState({ title: e.target.value })
   }
+
+  handleSubmit (e) {
+    e.preventDefault()
+    if (!this.state.title) {
+      return
+    }
+    this.uploadPaper(this.state.title)
+    this.setState({ title: '' })
+  }
+
+  render () {
+    return (
+      <Form inline onSubmit={this.handleSubmit}>
+        <FormGroup controlId='formUploadPaper'>
+          <ControlLabel>Upload Paper</ControlLabel>
+          {' '}
+          <FormControl
+            type='text'
+            value={this.state.title}
+            placeholder='insert title...'
+            onChange={this.handleChange}/>
+        </FormGroup>
+        {' '}
+        <Button type='submit'>
+          <Glyphicon glyph='book'/>
+        </Button>
+        <span>{this.state.status}</span>
+      </Form>
+    )
+  }
 }
 
-export default UploadPaper
+export default connect()(UploadPaper)

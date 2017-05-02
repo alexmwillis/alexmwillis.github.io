@@ -16,7 +16,6 @@ const loggerMiddleware = createLogger()
 const store = createStore(rootReducer, applyMiddleware(thunkMiddleware, loggerMiddleware))
 
 store.dispatch(fetchPapers())
-   .then(() => console.log(store.getState()))
 
 ReactDOM.render(
   <Provider store={store}>

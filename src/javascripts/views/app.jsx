@@ -1,11 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Grid, Row, Col, Panel } from 'react-bootstrap'
-import PropTypes from 'prop-types'
 import PaperList from './PaperList'
-// import UploadPaper from './UploadPaper'
+import UploadPaper from './UploadPaper'
 import Title from './Title'
-import Paper from '../types/Paper'
+import PapersHeader from './PapersHeader'
 
 const mapStateToProps = (state) => {
   return {
@@ -20,20 +19,16 @@ const AppView = ({ papers }) => {
         <Col xs={12}>
           <Title/>
           <Panel>
-             {/* <UploadPaper/> */}
+              <UploadPaper/>
           </Panel>
           <Panel>
-            <h3>There are&nbsp;<span className='black'>{papers.length}</span>&nbsp;uploaded papers</h3>
+            <PapersHeader papers={papers}/>
             <PaperList papers={papers}/><br/>
           </Panel>
         </Col>
       </Row>
     </Grid>
   )
-}
-
-AppView.propTypes = {
-  papers: PropTypes.arrayOf(PropTypes.instanceOf(Paper).isRequired).isRequired
 }
 
 export const App = connect(

@@ -1,41 +1,30 @@
-import React from 'react';
-import JournalClient from '../types/JournalClient';
-import {Button, Glyphicon} from 'react-bootstrap';
+import React from 'react'
+import { connect } from 'react-redux'
+import { Button, Glyphicon } from 'react-bootstrap'
+import { reviewPaper } from '../actions/actions'
 
 class ReviewPaper extends React.Component {
 
-    constructor(props) {
-        super(props);
+  constructor (props) {
+    super(props)
 
-        this.state = {
-            id: props.id,
-            status: ''
-        };
-    }
+    this.reviewPaper = id => this.props.dispatch(reviewPaper(id))
 
-    render() {
-        return <div>
-            <Button
-                onClick={this
-                .handleClick
-                .bind(this, this.state.id)}>
-                <Glyphicon glyph="thumbs-up"/>
+    this.state = { id: props.id }
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  render () {
+    return <div>
+            <Button onClick={this.handleClick}>
+                <Glyphicon glyph='thumbs-up'/>
             </Button>
-            <span>{this.state.status}</span>
         </div>
-    }
+  }
 
-    handleClick(id, e) {
-        this.setState({status: 'Initiating transaction... (please wait)'});
-        JournalClient
-            .reviewPaper(id)
-            .then(() => {
-                this.setState({status: 'Transaction complete'});
-            })
-            .catch(e => {
-                this.setState({status: 'Transaction failed'});
-            });
-    }
+  handleClick (e) {
+    this.reviewPaper(this.state.id)
+  }
 }
 
-export default ReviewPaper;
+export default connect()(ReviewPaper)
