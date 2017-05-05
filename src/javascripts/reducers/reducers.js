@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import { INVALIDATE_PAPERS, REQUEST_PAPERS, RECEIVE_PAPERS } from '../actions/actions'
 
 function papers (state = {
-  isFetching: false,
+  processing: false,
   didInvalidate: false,
   items: []
 }, action) {
@@ -13,11 +13,11 @@ function papers (state = {
       })
     case REQUEST_PAPERS:
       return Object.assign({}, state, {
-        isFetching: true
+        processing: true
       })
     case RECEIVE_PAPERS:
       return Object.assign({}, state, {
-        isFetching: false,
+        processing: false,
         didInvalidate: false,
         items: action.papers,
         lastUpdated: action.receivedAt

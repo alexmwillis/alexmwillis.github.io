@@ -8,7 +8,8 @@ import PapersHeader from './PapersHeader'
 
 const mapStateToProps = (state) => {
   return {
-    papers: state.papers.items
+    papers: state.papers.items,
+    processing: state.papers.processing
   }
 }
 

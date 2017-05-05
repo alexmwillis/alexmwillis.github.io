@@ -8,22 +8,19 @@ class ReviewPaper extends React.Component {
   constructor (props) {
     super(props)
 
-    this.reviewPaper = id => this.props.dispatch(reviewPaper(id))
-
     this.state = { id: props.id }
-    this.handleClick = this.handleClick.bind(this)
   }
 
   render () {
     return <div>
-            <Button onClick={this.handleClick}>
+            <Button block onClick={this.handleClick}>
                 <Glyphicon glyph='thumbs-up'/>
             </Button>
         </div>
   }
 
-  handleClick (e) {
-    this.reviewPaper(this.state.id)
+  reviewPaper (e) {
+    this.props.dispatch(reviewPaper(this.state.id))
   }
 }
 
