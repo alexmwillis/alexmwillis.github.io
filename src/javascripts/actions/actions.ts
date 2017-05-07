@@ -1,5 +1,6 @@
-import JournalClient from '../types/JournalClient'
-
+import JournalClient from '../services/JournalClient'
+import Paper from '../types/Paper'
+import { Dispatch } from 'react-redux'
 export const INVALIDATE_PAPERS = 'INVALIDATE_PAPERS'
 export const REQUEST_PAPERS = 'REQUEST_PAPERS'
 export const RECEIVE_PAPERS = 'RECEIVE_PAPERS'
@@ -12,7 +13,7 @@ function requestPapers () {
   return { type: REQUEST_PAPERS }
 }
 
-function receivePapers (papers) {
+function receivePapers (papers: Paper[]) {
   return {
     type: RECEIVE_PAPERS,
     papers: papers,
@@ -21,7 +22,7 @@ function receivePapers (papers) {
 }
 
 export function fetchPapers () {
-  return function (dispatch) {
+  return function (dispatch:Dispatch<void>) {
     dispatch(requestPapers())
 
     return JournalClient
@@ -30,8 +31,8 @@ export function fetchPapers () {
   }
 }
 
-export function uploadPaper (title) {
-  return function (dispatch) {
+export function uploadPaper (title:string) {
+  return function (dispatch:Dispatch<void>) {
     return JournalClient
       .uploadPaper(title)
       .then(() => {
@@ -40,8 +41,8 @@ export function uploadPaper (title) {
   }
 }
 
-export function reviewPaper (id) {
-  return function (dispatch) {
+export function reviewPaper (id:number) {
+  return function (dispatch:Dispatch<void>) {
     return JournalClient
       .reviewPaper(id)
       .then(() => {

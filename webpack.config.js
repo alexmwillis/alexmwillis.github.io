@@ -2,20 +2,22 @@ const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
-  entry: './src/javascripts/main.jsx',
+  entry: './src/javascripts/main.tsx',
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js'
   },
   plugins: [
     new CopyWebpackPlugin([
-      { from: './src/index.html', to: 'index.html' }
+      { from: './src/index.html', to: 'index.html' },
+      { from: './node_modules/react/dist/react.js', to: 'react.js' },
+      { from: './node_modules/react-dom/dist/react-dom.js', to: 'react-dom.js' }
     ])
   ],
   devtool: 'source-map',
   devServer: { inline: true },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.ts', '.tsx', '.js', '.jsx']
   },
   module: {
     loaders: [
@@ -52,7 +54,16 @@ module.exports = {
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
+      },
+      {
+        test: /\.tsx?$/,
+        loader: 'awesome-typescript-loader',
+        exclude: /node_modules/
       }
     ]
+  },
+  externals: {
+    'react': 'React',
+    'react-dom': 'ReactDOM'
   }
 }

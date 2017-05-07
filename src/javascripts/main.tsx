@@ -1,8 +1,7 @@
-import '../stylesheets/app.css'
-import Bootstrap from 'bootstrap/dist/css/bootstrap.css'
+import '../stylesheets/main.css'
 
-import React from 'react'
-import ReactDOM from 'react-dom'
+import * as React from "react";
+import * as ReactDOM from 'react-dom'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import { createStore, applyMiddleware } from 'redux'
