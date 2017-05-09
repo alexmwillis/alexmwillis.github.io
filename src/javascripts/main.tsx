@@ -5,14 +5,15 @@ import * as ReactDOM from 'react-dom'
 import thunkMiddleware from 'redux-thunk'
 import { createLogger } from 'redux-logger'
 import { createStore, applyMiddleware } from 'redux'
-import rootReducer from './reducers/reducers'
+import appReducer from './reducers/reducers'
 import { fetchPapers } from './actions/actions'
 import { Provider } from 'react-redux'
+import AppState from './types/AppState'
 import { App } from './views/App'
 
 const loggerMiddleware = createLogger()
 
-const store = createStore(rootReducer, applyMiddleware(thunkMiddleware, loggerMiddleware))
+const store = createStore<AppState>(appReducer, applyMiddleware(thunkMiddleware, loggerMiddleware))
 
 store.dispatch(fetchPapers())
 

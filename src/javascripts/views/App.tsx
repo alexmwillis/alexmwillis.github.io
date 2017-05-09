@@ -1,19 +1,21 @@
-import React from 'react'
+import * as React from "react";
 import { connect } from 'react-redux'
 import { Grid, Row, Col, Panel } from 'react-bootstrap'
+import AppState from '../types/AppState'
+import Paper from '../types/Paper'
 import PaperList from './PaperList'
 import UploadPaper from './UploadPaper'
 import Title from './Title'
 import PapersHeader from './PapersHeader'
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppState) => {
   return {
-    papers: state.papers.items,
-    processing: state.papers.processing
+    papers: state.papers,
+    processing: state.processing
   }
 }
 
-const AppView = ({ papers }) => {
+const AppView = ({papers: Paper)}) => {
   return (
     <Grid>
       <Row>
