@@ -9,7 +9,15 @@
 
 <body>
     <div id="container"></div>
-    <script src="bundle.js"></script>
+    <script src="react.js"></script>
+    <script src="react-dom.js"></script>
 </body>
+
+<script lang="js">
+    var script = document.createElement("script");
+    script.src = "bundle.js";
+    script.type = "text/javascript";
+    document.getElementsByTagName("head")[0].appendChild(script);
+</script>
 
 </html>
