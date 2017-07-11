@@ -1,17 +1,10 @@
-import {combineReducers, Action} from 'redux'
-import {INVALIDATE_PAPERS, REQUEST_PAPERS, RECEIVE_PAPERS} from '../actions'
+import {Action} from 'redux'
+import {AppAction, INVALIDATE_PAPERS, BEGIN_TRANSACTION, END_TRANSACTION, RECEIVE_PAPERS} from '../actions'
 import AppState from '../types/AppState'
 import Paper from '../types/Paper'
 
-interface receiveAction extends Action {
-  papers : Paper[]
-  receivedAt : number
-}
-
-type AppAction = Action & receiveAction
-
 function appReducer(state : AppState = {
-  processing: false,
+  processing: 0,
   didInvalidate: false,
   papers: [],
   lastUpdated: 0
@@ -19,11 +12,12 @@ function appReducer(state : AppState = {
   switch (action.type) {
     case INVALIDATE_PAPERS:
       return {...state, didInvalidate: true}
-    case REQUEST_PAPERS:
-      return {...state, processing: true}
+    case BEGIN_TRANSACTION:
+      return {...state, processing: state.processing + 1}
+    case END_TRANSACTION:
+      return {...state, processing: state.processing - 1}
     case RECEIVE_PAPERS:
       return {...state, 
-        processing: false,
         didInvalidate: false,
         papers: action.papers,
         lastUpdated: action.receivedAt

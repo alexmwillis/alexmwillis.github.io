@@ -2,7 +2,7 @@ import Paper from './Paper'
 
 type AppState = {
   papers: Paper[],
-  processing: boolean
+  processing: number
   didInvalidate: boolean
   lastUpdated: number
 }

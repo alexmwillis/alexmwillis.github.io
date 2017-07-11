@@ -61,7 +61,6 @@ class UploadPaper extends React.Component<IUploadPaperProps, IUploadPaperState> 
   }
 }
 
-
 function mapStateToProps(state: any) {
   return { }
 }
