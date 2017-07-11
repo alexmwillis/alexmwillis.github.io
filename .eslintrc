@@ -19,5 +19,8 @@
     "object-curly-spacing" : [2, "always"],
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error"
+  },
+  "globals": {
+    "web3": true
   }
 }

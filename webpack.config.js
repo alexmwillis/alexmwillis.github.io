@@ -2,7 +2,7 @@ const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
-  entry: './src/javascripts/main.tsx',
+  entry: './src/javascripts/index.tsx',
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js'
@@ -10,6 +10,7 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin([
       { from: './src/index.html', to: 'index.html' },
+      { from: './favicon.ico', to: 'favicon.ico' },
       { from: './node_modules/react/dist/react.js', to: 'react.js' },
       { from: './node_modules/react-dom/dist/react-dom.js', to: 'react-dom.js' }
     ])

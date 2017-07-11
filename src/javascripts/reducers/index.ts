@@ -1,5 +1,5 @@
 import {combineReducers, Action} from 'redux'
-import {INVALIDATE_PAPERS, REQUEST_PAPERS, RECEIVE_PAPERS} from '../actions/actions'
+import {INVALIDATE_PAPERS, REQUEST_PAPERS, RECEIVE_PAPERS} from '../actions'
 import AppState from '../types/AppState'
 import Paper from '../types/Paper'
 

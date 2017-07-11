@@ -1,15 +1,16 @@
-import React from 'react'
+import * as React from "react";
 import ReviewPaper from './ReviewPaper'
 import { Table } from 'react-bootstrap'
+import Paper from "../types/Paper";
 
-const Paper = ({ paper }) => {
+const PaperRow = ({ paper, reviewPaper } : { paper : Paper, reviewPaper: (id:number) => void}) => {
   return (
     <tr>
       <td>{paper.id}</td>
       <td>{paper.title}</td>
       <td>{paper.author}</td>
       <td>{paper.reviewCount}</td>
-      <td><ReviewPaper id={paper.id}/></td>
+      <td><ReviewPaper reviewPaper={() => reviewPaper(paper.id)}/></td>
     </tr>
   )
 }
@@ -26,9 +27,9 @@ const PaperListHeader = () => {
   )
 }
 
-const PaperList = ({ papers }) => {
+const PaperList = ({ papers, reviewPaper } : { papers : Paper[], reviewPaper: (id:number) => void }) => {
   const papersNode = papers.map((paper) => {
-    return (<Paper paper={paper} key={paper.id}/>)
+    return (<PaperRow paper={paper} key={paper.id} reviewPaper={reviewPaper} />)
   })
   return (
     <Table striped bordered condensed hover>

@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from "react";
 import { connect } from 'react-redux'
 import {
   Form,
@@ -8,30 +8,36 @@ import {
   Button,
   Glyphicon
 } from 'react-bootstrap'
-import { uploadPaper } from '../actions/actions'
+import { uploadPaper } from '../actions'
+import {Dispatch} from "react-redux";
 
-class UploadPaper extends React.Component {
-  constructor (props) {
+interface IUploadPaperProps { dispatch : Dispatch<void>; }
+interface IUploadPaperState { title : string }
+
+class UploadPaper extends React.Component<IUploadPaperProps, IUploadPaperState> {
+  constructor (props : IUploadPaperProps) {
     super(props)
-
-    this.uploadPaper = title => this.props.dispatch(uploadPaper(title))
 
     this.state = { title: '' }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleChange (e) {
+  handleChange (e:any) {
     this.setState({ title: e.target.value })
   }
 
-  handleSubmit (e) {
+  handleSubmit (e:any) {
+    const title = this.state.title
+
     e.preventDefault()
-    if (!this.state.title) {
+    if (!title) {
       return
     }
-    this.uploadPaper(this.state.title)
-    this.setState({ title: '' })
+
+    this.props.dispatch((dispatch:Dispatch<void>) => {  
+      uploadPaper(title)(dispatch).then(() => this.setState({ title: '' }))
+    })    
   }
 
   render () {
@@ -50,10 +56,14 @@ class UploadPaper extends React.Component {
         <Button type='submit'>
           <Glyphicon glyph='book'/>
         </Button>
-        <span>{this.state.status}</span>
       </Form>
     )
   }
 }
 
-export default connect()(UploadPaper)
+
+function mapStateToProps(state: any) {
+  return { }
+}
+
+export default connect(mapStateToProps)(UploadPaper)

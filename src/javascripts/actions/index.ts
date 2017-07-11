@@ -13,7 +13,7 @@ function requestPapers () {
   return { type: REQUEST_PAPERS }
 }
 
-function receivePapers (papers: Paper[]) {
+function receivePapers (papers : Paper[]) {
   return {
     type: RECEIVE_PAPERS,
     papers: papers,
@@ -22,7 +22,7 @@ function receivePapers (papers: Paper[]) {
 }
 
 export function fetchPapers () {
-  return function (dispatch:Dispatch<void>) {
+  return function (dispatch : Dispatch<void>) {
     dispatch(requestPapers())
 
     return JournalClient
@@ -31,8 +31,8 @@ export function fetchPapers () {
   }
 }
 
-export function uploadPaper (title:string) {
-  return function (dispatch:Dispatch<void>) {
+export function uploadPaper (title : string) {
+  return function (dispatch : Dispatch<void>) {
     return JournalClient
       .uploadPaper(title)
       .then(() => {
@@ -41,8 +41,8 @@ export function uploadPaper (title:string) {
   }
 }
 
-export function reviewPaper (id:number) {
-  return function (dispatch:Dispatch<void>) {
+export function reviewPaper (id : number) {
+  return function (dispatch : Dispatch<void>) {
     return JournalClient
       .reviewPaper(id)
       .then(() => {
